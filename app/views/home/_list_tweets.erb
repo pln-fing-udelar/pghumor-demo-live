@@ -1,0 +1,19 @@
+<ul class="list-group" id="tweets-list">
+    <li class="list-group-item"><strong id="current-trend">Clasificador</strong></li>
+    <div id="tweets-div">
+      <% @tweets.each do |tweet| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-1 col-md-1">
+                <img class="img-user" src="<%= tweet.account.image_path%>"/>
+              </div>
+              <div class="col-sm-11 col-md-11">
+                <p class="username" data-toggle="modal" data-target="@<%= tweet.account.name %>" data-src="<%= tweet.account.description %>">@<%= tweet.account.name %></p>
+                <p class="text-tweet"><%= tweet.text %></p>
+              </div>
+            </div>
+          </li>
+      <% end %>
+    </div>
+</ul>
+

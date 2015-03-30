@@ -1,3 +1,47 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  padding-top: 50px;
+  background: url('http://fc09.deviantart.net/fs71/i/2010/222/b/6/Cute_Twitter_Background_by_iThinkThereforeiMac.jpg');
+}
+.main-content{
+  padding: 40px 15px;
+  text-align: center;
+}
+
+footer{
+  margin: auto;
+  text-align: center;
+  border: none;
+}
+
+.username{
+   text-align: left;
+   font-size: 13px;
+   color: #999999;
+   margin: 0px;
+ }
+
+.username:hover{
+  color: #222222;
+  cursor: pointer;
+}
+
+.text-tweet{
+  text-align: left;
+}
+
+.img-user{
+  border-radius: 5px;
+}
+
+#title{
+  color: #ffffff;
+}
+
+#error_explanation{
+  padding: 0px;
+  margin: 5px;
+}

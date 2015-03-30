@@ -1,0 +1,14 @@
+<!-- Template for generate a tweet list item in javascript -->
+<script id="tweet-template" type="text/x-handlebars-template">
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-1 col-md-1">
+        <img class="img-user" src="{{image}}"/>
+      </div>
+      <div class="col-sm-11 col-md-11">
+        <p class="username"  data-target="@{{username}}" data-src="{{bio}}">@{{username}}</p>
+        <p class="text-tweet">{{text}}</p>
+      </div>
+    </div>
+  </li>
+</script>
