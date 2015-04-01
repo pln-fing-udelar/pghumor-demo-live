@@ -7,8 +7,8 @@ var Tweets = function(){
     $('#add-favorite-message').empty();
 
     var TIME_BETWEEN_ITEMS = 4000; // 4 seconds
-    var lastTweetId = 10;
-    var cantidadTweets = 5;
+    var lastTweetId = 57;
+    var cantidadTweets = 10;
     var slideListTweet = function(){
         var $lastChild = $('#tweets-div li').last();
         $('<li class="list-group-item">' + $lastChild.html() + '</li>')
@@ -80,7 +80,8 @@ var Tweets = function(){
             image: tweet.account.image_path,
             username: tweet.account.name,
             text: tweet.text,
-            bio: tweet.account.description
+            bio: tweet.account.description,
+            color: tweet.is_humor ?  "rgba(223, 240, 216, 0.6)" : "rgba(242, 222, 222, 0.6)"
         });
         return html
     };

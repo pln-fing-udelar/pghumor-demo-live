@@ -2,7 +2,7 @@
     <li class="list-group-item"><strong id="current-trend">Clasificador</strong></li>
     <div id="tweets-div">
       <% @tweets.each do |tweet| %>
-          <li class="list-group-item">
+          <li class="list-group-item" style="background-color: <%= tweet.is_humor ? "rgba(223, 240, 216, 0.6)" : "rgba(242, 222, 222, 0.6)" %>;">
             <div class="row">
               <div class="col-sm-1 col-md-1">
                 <img class="img-user" src="<%= tweet.account.image_path%>"/>
