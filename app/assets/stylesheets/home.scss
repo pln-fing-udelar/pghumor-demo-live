@@ -29,12 +29,24 @@ footer{
   cursor: pointer;
 }
 
-.text-tweet{
+.tweet__item{
+  display: inline;
+  margin-left: 5px;
+}
+
+.tweet__item--left{
+  float: left;
+}
+
+.tweet__text{
+  clear: both;
   text-align: left;
 }
 
+
 .img-user{
   border-radius: 5px;
+  vertical-align: middle;
 }
 
 #title{
@@ -44,4 +56,26 @@ footer{
 #error_explanation{
   padding: 0px;
   margin: 5px;
+}
+
+dl{
+}
+
+dt {
+  float: left;
+  clear: both;
+  display: inline;
+  font-weight: bold;
+  color: black;
+  min-width: 150px;
+}
+
+dd {
+  display: inline;
+  float: left;
+}
+
+.cleaner{
+  clear: both;
+  height: 5px;
 }

@@ -9,19 +9,6 @@ var Tweets = function(){
     var TIME_BETWEEN_ITEMS = 4000; // 4 seconds
     var lastTweetId = 57;
     var cantidadTweets = 10;
-    var slideListTweet = function(){
-        var $lastChild = $('#tweets-div li').last();
-        $('<li class="list-group-item">' + $lastChild.html() + '</li>')
-            .hide()
-            .prependTo('#tweets-div')
-            .slideDown();
-        $lastChild.remove();
-    };
-
-    module.animate = function(){
-        setInterval(slideListTweet, 2000);
-    };
-
 
     /**
      * get tweets with hastag and put it in list removing the last.
@@ -61,8 +48,8 @@ var Tweets = function(){
                 $(getHtmlTweet(tweets[i]))
                     .hide()
                     .prependTo('#tweets-div')
-                    .slideDown();
-                $lastChild.remove();
+                    .slideDown('normal', module.addPopover);
+                $lastChild.slideUp('normal', function() { $(this).remove(); });
                 module.addUsernameClickListener();
                 tweetLoop(i, tweets);
             }
@@ -80,8 +67,9 @@ var Tweets = function(){
             image: tweet.account.image_path,
             username: tweet.account.name,
             text: tweet.text,
-            bio: tweet.account.description,
-            color: tweet.is_humor ?  "rgba(223, 240, 216, 0.6)" : "rgba(242, 222, 222, 0.6)"
+            eshumor: tweet.is_humor,
+            positive: tweet.positive_votes,
+            negative: tweet.negative_votes
         });
         return html
     };
@@ -93,16 +81,21 @@ var Tweets = function(){
     };
     /***************************************************************/
 
-    module.showBio = function(tweet){
-        var user_name = tweet.attr('data-target');
-        var user_bio = tweet.attr('data-src');
-
-        $('#twitter-user-name').text(user_name)
-        if (user_bio == ''){
-            user_bio = user_name + ' hasn\'t got a description!'
-        }
-        $('#twitter-user-bio').text(user_bio);
-        $('#show-user-bio').modal('show');
+    module.addPopover = function(){
+        $('.tweet').popover({
+            html: true,
+            trigger: "hover",
+            title: "Descripción",
+            placement: "left",
+            content: function(){
+                content = '<dl>';
+                content += '<dt>Votos positivos</dt><dd>' + $(this).data('positive-votes') + '</dd>';
+                content += '<dt>Votos negativos</dt><dd>' + $(this).data('negative-votes') + '</dd>';
+                content += '</dl>';
+                content += '<div class="cleaner"></div>'
+                return content;
+            }
+        });
     };
 
     return module;
@@ -112,4 +105,5 @@ $().ready(function(){
     var tweetsModule = Tweets();
     tweetsModule.getCurrentTrendTweets();
     tweetsModule.addUsernameClickListener();
+    tweetsModule.addPopover();
 });

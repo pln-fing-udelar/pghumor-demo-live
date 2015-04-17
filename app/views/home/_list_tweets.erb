@@ -2,14 +2,21 @@
     <li class="list-group-item"><strong id="current-trend">Clasificador</strong></li>
     <div id="tweets-div">
       <% @tweets.each do |tweet| %>
-          <li class="list-group-item" style="background-color: <%= tweet.is_humor ? "rgba(223, 240, 216, 0.6)" : "rgba(242, 222, 222, 0.6)" %>;">
+          <li class="list-group-item tweet" data-positive-votes="<%=tweet.positive_votes%>" data-negative-votes="<%=tweet.negative_votes%>" rel="popover" data-placement="left">
             <div class="row">
               <div class="col-sm-1 col-md-1">
                 <img class="img-user" src="<%= tweet.account.image_path%>"/>
               </div>
               <div class="col-sm-11 col-md-11">
-                <p class="username" data-toggle="modal" data-target="@<%= tweet.account.name %>" data-src="<%= tweet.account.description %>">@<%= tweet.account.name %></p>
-                <p class="text-tweet"><%= tweet.text %></p>
+                <div class="tweet__header">
+                  <p class="tweet__item username tweet__item tweet__item--left">@<%= tweet.account.name %></p>
+                  <% if tweet.is_humor %>
+                    <span class="tweet__item tweet__item--left label label-success">Clasificado Correctamente</span>
+                  <% else %>
+                    <span class="tweet__item tweet__item--left label label-danger">Clasificado Incorrectamente</span>
+                  <% end %>
+                </div>
+                <p class="tweet__text"><%= tweet.text %></p>
               </div>
             </div>
           </li>
