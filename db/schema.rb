@@ -11,19 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329231828) do
+ActiveRecord::Schema.define(version: 20150417214447) do
 
   create_table "accounts", force: :cascade do |t|
-    t.string "name",        limit: 255
-    t.string "image_path",  limit: 255
-    t.string "description", limit: 255
+    t.string  "name",        limit: 255
+    t.string  "image_path",  limit: 255
+    t.string  "description", limit: 255
+    t.boolean "is_humor",    limit: 1,   default: false
   end
 
   create_table "tweets", force: :cascade do |t|
-    t.string  "text",          limit: 255
-    t.boolean "is_humor",      limit: 1
-    t.boolean "is_classified", limit: 1
-    t.integer "account_id",    limit: 4
+    t.string  "text",           limit: 255
+    t.boolean "is_humor",       limit: 1
+    t.boolean "is_classified",  limit: 1
+    t.integer "account_id",     limit: 4
+    t.string  "id_tweet",       limit: 45
+    t.integer "positive_votes", limit: 4,   default: 0
+    t.integer "negative_votes", limit: 4,   default: 0
   end
 
 end
