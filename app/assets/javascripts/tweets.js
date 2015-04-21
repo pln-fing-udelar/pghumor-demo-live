@@ -119,7 +119,8 @@ var Tweets = function(){
             text: tweet.text,
             eshumor: tweet.is_humor,
             positive: tweet.positive_votes,
-            negative: tweet.negative_votes
+            negative: tweet.negative_votes,
+            accountType: tweet.account.account_type
         });
         return html
     };
@@ -143,6 +144,7 @@ var Tweets = function(){
                 content = '<dl>';
                 content += '<dt>Votos positivos</dt><dd>' + $(this).data('positive-votes') + '</dd>';
                 content += '<dt>Votos negativos</dt><dd>' + $(this).data('negative-votes') + '</dd>';
+                content += '<dt>Tipo de cuenta</dt><dd>'  + $(this).data('account-type') + '</dd>';
                 content += '</dl>';
                 content += '<div class="cleaner"></div>'
                 return content;
