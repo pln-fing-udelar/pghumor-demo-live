@@ -11,15 +11,15 @@
           <li class="list-group-item tweet" data-positive-votes="<%=tweet.positive_votes%>" data-negative-votes="<%=tweet.negative_votes%>" rel="popover" data-placement="left">
             <div class="row">
               <div class="col-sm-1 col-md-1">
-                <img class="img-user" src="<%= tweet.account.image_path%>"/>
+                <img class="img-user" src="assets/<%= tweet.account.image_path%>"/>
               </div>
               <div class="col-sm-11 col-md-11">
                 <div class="tweet__header">
                   <p class="tweet__item username tweet__item tweet__item--left">@<%= tweet.account.name %></p>
                   <% if tweet.is_humor %>
-                    <span class="tweet__item tweet__item--left label label-success">Clasificado Correctamente</span>
+                    <span class="tweet__item tweet__item--left label label-success">Clasificado correctamente</span>
                   <% else %>
-                    <span class="tweet__item tweet__item--left label label-danger">Clasificado Incorrectamente</span>
+                    <span class="tweet__item tweet__item--left label label-danger">Clasificado incorrectamente</span>
                   <% end %>
                 </div>
                 <p class="tweet__text"><%= tweet.text %></p>

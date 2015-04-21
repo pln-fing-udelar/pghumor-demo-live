@@ -3,15 +3,15 @@
   <li class="list-group-item tweet" data-positive-votes="{{positive}}" data-negative-votes="{{negative}}" rel="popover">
     <div class="row">
       <div class="col-sm-1 col-md-1">
-        <img class="img-user" src="{{image}}"/>
+        <img class="img-user" src="assets/{{image}}"/>
       </div>
       <div class="col-sm-11 col-md-11">
         <div class="tweet__header">
             <p class="tweet__item username tweet__item tweet__item--left">@{{username}}</p>
             {{#if eshumor}}
-                <span class="tweet__item tweet__item--left label label-success">Clasificado Correctamente</span>
+                <span class="tweet__item tweet__item--left label label-success">Clasificado correctamente</span>
             {{else}}
-                <span class="tweet__item tweet__item--left label label-danger">Clasificado Incorrectamente</span>
+                <span class="tweet__item tweet__item--left label label-danger">Clasificado incorrectamente</span>
             {{/if}}
         </div>
         <p class="tweet__text">{{text}}</p>
