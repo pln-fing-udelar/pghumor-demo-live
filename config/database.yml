@@ -14,3 +14,12 @@ test:
   pool: 5
   username: pghumor
   password: ckP8t/2l
+
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: prueba_concepto_development
+  pool: 5
+  username: pghumor
+  password: ckP8t/2l
