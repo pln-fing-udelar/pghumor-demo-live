@@ -45,5 +45,7 @@ group :development, :test do
   gem 'spring', '~> 1.3.4'
 
   gem 'better_errors', '~> 2.1.1'
+
+  gem 'rerun', '~> 0.10.0'
 end
 
