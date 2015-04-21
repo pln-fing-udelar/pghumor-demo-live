@@ -4,9 +4,43 @@
 var Tweets = function(){
 
     var module = {};
-    $('#add-favorite-message').empty();
+    var pause = false;
+    var toolTip = false;
+    var tweetCount = 10;
+    var wellClassified = 8;
+    var badClassified = 2;
+
+
+    var setHeader = function(){
+        $('.wellClassified').text('' + Math.round(wellClassified*100/tweetCount) + '%');
+        $('.badClassified').text('' + Math.round(badClassified*100/tweetCount) + '%');
+        if (pause || toolTip){
+            $('#current-title').html('Humor según el clasificador <i class="fa fa-pause"></i>');
+        }
+        else{
+            $('#current-title').html('Humor según el clasificador <i class="fa fa-play"></i>');
+        }
+    };
+
+    var onHover = function(){
+        toolTip = true;
+        setHeader();
+    };
+
+    var outHover = function(){
+        toolTip = false;
+        setHeader();
+    };
+
+    $('.tweet').hover(onHover, outHover);
+
+    $('#current-title').click(function(){
+        pause = !pause;
+        setHeader();
+    });
 
     var TIME_BETWEEN_ITEMS = 4000; // 4 seconds
+    var TIME_WHEN_STOP = 1000 // 1 second
     var lastTweetId = 57;
     var cantidadTweets = 10;
 
@@ -16,8 +50,7 @@ var Tweets = function(){
      * @param hashtag represent a twitter hashtag to search
      */
     module.getCurrentTrendTweets = function(){
-        var currentTrend = $('#current-trend').text();
-        module.getTweets(currentTrend);
+        module.getTweets();
     };
 
     module.getTweets = function(){
@@ -38,18 +71,34 @@ var Tweets = function(){
         });
     };
 
-    var tweetLoop = function (i, tweets) {
+    var tweetLoop = function (i, tweets, time) {
+        if (typeof time === 'undefined') { time = TIME_BETWEEN_ITEMS; }
         setTimeout(function () {
+            if (pause || toolTip){
+                tweetLoop(i, tweets, TIME_WHEN_STOP);
+                return;
+            }
             if (--i){
+                $('#current-title').html('Humor según el clasificador <i class="fa fa-play"></i>');
                 if (tweets[i].id > lastTweetId){
                     lastTweetId = tweets[i].id;
                 }
                 var $lastChild = $('#tweets-div li').last();
+                if (tweets[i].is_humor){
+                    wellClassified++;
+                }
+                else{
+                    badClassified++;
+                }
+                tweetCount++;
                 $(getHtmlTweet(tweets[i]))
                     .hide()
                     .prependTo('#tweets-div')
                     .slideDown('normal', module.addPopover);
-                $lastChild.slideUp('normal', function() { $(this).remove(); });
+                $lastChild.slideUp('normal', function() {
+                    $(this).remove();
+                    setHeader();
+                });
                 module.addUsernameClickListener();
                 tweetLoop(i, tweets);
             }
@@ -57,7 +106,7 @@ var Tweets = function(){
                 module.getCurrentTrendTweets();
             }
 
-        }, TIME_BETWEEN_ITEMS)
+        }, time)
     };
 
     var getHtmlTweet = function(tweet){
@@ -82,6 +131,8 @@ var Tweets = function(){
     /***************************************************************/
 
     module.addPopover = function(){
+        $('.tweet').hover(onHover, outHover);
+        $(".popover").remove();
         $('.tweet').popover({
             html: true,
             trigger: "hover",
