@@ -34,6 +34,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# In order to have a javascript library in server:
+gem 'libv8', '~> 3.16.14.7'
+gem 'execjs', '~> 2.5.2'
+gem 'therubyracer', '~> 0.12.2', :platforms => :ruby
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 4.0.5'
