@@ -3,11 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 body {
-  padding-top: 50px;
   background: url('http://fc09.deviantart.net/fs71/i/2010/222/b/6/Cute_Twitter_Background_by_iThinkThereforeiMac.jpg');
 }
 .main-content{
-  padding: 40px 15px;
+  padding: 20px 15px;
   text-align: center;
 }
 
@@ -89,4 +88,12 @@ dd {
 
 .result-label{
   font-size: 15px!important;
+}
+
+body {
+  min-height: 2000px;
+}
+
+.navbar-static-top {
+  margin-bottom: 19px;
 }

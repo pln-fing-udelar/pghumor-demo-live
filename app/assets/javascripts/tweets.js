@@ -14,6 +14,7 @@ var Tweets = function(){
     var setHeader = function(){
         $('.wellClassified').text('' + Math.round(wellClassified*100/tweetCount) + '%');
         $('.badClassified').text('' + Math.round(badClassified*100/tweetCount) + '%');
+        $('.totalClassified').text('' + tweetCount);
         if (pause || toolTip){
             $('#current-title').html('Humor según el clasificador <i class="fa fa-pause"></i>');
         }
