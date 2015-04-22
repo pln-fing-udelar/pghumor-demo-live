@@ -113,6 +113,7 @@ var Tweets = function(){
     var getHtmlTweet = function(tweet){
         var source   = $("#tweet-template").html();
         var template = Handlebars.compile(source);
+        var average = (tweet.one_star + 2*tweet.two_star + 3*tweet.three_star + 4*tweet.four_star + 5*tweet.five_star)*1.0/(tweet.positive_votes + tweet.negative_votes);
         var html = template({
             image: tweet.account.image_path,
             username: tweet.account.name,
@@ -120,7 +121,8 @@ var Tweets = function(){
             eshumor: tweet.is_humor,
             positive: tweet.positive_votes,
             negative: tweet.negative_votes,
-            accountType: tweet.account.account_type
+            accountType: tweet.account.account_type,
+            averageStar: average
         });
         return html
     };
@@ -141,10 +143,12 @@ var Tweets = function(){
             title: "Descripción",
             placement: "left",
             content: function(){
+                console.log($(this).data('avg-stars'));
                 content = '<dl>';
                 content += '<dt>Votos positivos</dt><dd>' + $(this).data('positive-votes') + '</dd>';
                 content += '<dt>Votos negativos</dt><dd>' + $(this).data('negative-votes') + '</dd>';
                 content += '<dt>Tipo de cuenta</dt><dd>'  + $(this).data('account-type') + '</dd>';
+                content += '<dt>Prom. estrellas</dt><dd>'  + $(this).data('avg-stars').toLocaleString() + '</dd>';
                 content += '</dl>';
                 content += '<div class="cleaner"></div>'
                 return content;

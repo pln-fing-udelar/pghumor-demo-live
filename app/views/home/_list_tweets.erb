@@ -8,7 +8,7 @@
     </li>
     <div id="tweets-div">
       <% @tweets.each do |tweet| %>
-          <li class="list-group-item tweet" data-account-type="<%= tweet.account.account_type %>" data-positive-votes="<%= tweet.positive_votes %>" data-negative-votes="<%= tweet.negative_votes %>" rel="popover" data-placement="left">
+          <li class="list-group-item tweet" data-account-type="<%= tweet.account.account_type %>" data-positive-votes="<%= tweet.positive_votes %>" data-negative-votes="<%= tweet.negative_votes %>" data-avg-stars="<%= number_to_human(tweet.star_average) %>" rel="popover" data-placement="left">
             <div class="row">
               <div class="col-sm-1 col-md-1">
                 <img class="img-user" src="assets/<%= tweet.account.image_path%>"/>

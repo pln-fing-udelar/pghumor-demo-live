@@ -6,4 +6,9 @@ class Tweet < ActiveRecord::Base
     puts tweets.inspect
     tweets
   end
+
+  def star_average
+    puts (one_star + 2*two_star + 3*three_star + 4*four_star + 5*five_star)/(positive_votes + negative_votes)
+    (one_star + 2*two_star + 3*three_star + 4*four_star + 5*five_star)*1.0/(positive_votes + negative_votes)
+  end
 end
