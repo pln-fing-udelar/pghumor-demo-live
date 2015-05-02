@@ -141,7 +141,7 @@ var Tweets = function(){
             html: true,
             trigger: "hover",
             title: "Descripción",
-            placement: "left",
+            placement: "top",
             content: function(){
                 console.log($(this).data('avg-stars'));
                 content = '<dl>';
