@@ -4,7 +4,7 @@ development:
   database: prueba_concepto_development
   pool: 5
   username: pghumor
-  password: ckP8t/2l
+  password: --PASSWORD--
 
 
 test:
@@ -13,7 +13,7 @@ test:
   database: prueba_concepto_development
   pool: 5
   username: pghumor
-  password: ckP8t/2l
+  password: --PASSWORD--
 
 
 production:
@@ -22,4 +22,4 @@ production:
   database: prueba_concepto_development
   pool: 5
   username: pghumor
-  password: ckP8t/2l
+  password: --PASSWORD--
