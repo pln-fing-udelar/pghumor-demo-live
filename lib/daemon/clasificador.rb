@@ -6,4 +6,9 @@ class Clasificador
     options = { :body => { :texto => tweet.text } }
     self.class.post('/evaluar', options)
   end
+
+  def es_humor? tweet
+    response = evaluar tweet
+    response.parsed_response['humor'] == '1'
+  end
 end
