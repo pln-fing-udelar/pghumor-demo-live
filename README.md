@@ -7,15 +7,24 @@ Crear el archivo `config/secrets.yml` con el contenido (reemplazando por la cont
 ```yml
 development:
   password: --PASSWORD--
+  secret_key_base: --SECRET_KEY_BASE--
 
 test:
   password: --PASSWORD--
+  secret_key_base: --SECRET_KEY_BASE--
 
 production:
-  password: --PASSWORD--
+  password: <%= ENV["PASSWORD"] %>
+  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>
 ```
 
-Autorizar usuario pghumor a la base:
+Para generar los valores de `secret_key_base` en `development` y `test`, ejecutar:
+
+```bash
+bundle exec rake secret
+```
+
+Autorizar usuario `pghumor` a la base:
 
 ```sql
 GRANT ALL PRIVILEGES ON prueba_concepto_development.* TO 'pghumor'@'%' WITH GRANT OPTION;
