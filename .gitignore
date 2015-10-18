@@ -42,3 +42,5 @@ build/
 !/log/.keep
 
 .idea
+
+config/secrets.yml

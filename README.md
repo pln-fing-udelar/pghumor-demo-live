@@ -2,6 +2,19 @@
 
 ## Configurar usuario de la base
 
+Crear el archivo `config/secrets.yml` con el contenido (reemplazando por la contraseña del usuario de la base de datos):
+
+```yml
+development:
+  password: --PASSWORD--
+
+test:
+  password: --PASSWORD--
+
+production:
+  password: --PASSWORD--
+```
+
 Autorizar usuario pghumor a la base:
 
 ```sql
