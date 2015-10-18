@@ -39,6 +39,8 @@ gem 'libv8', '~> 3.16.14.7'
 gem 'execjs', '~> 2.5.2'
 gem 'therubyracer', '~> 0.12.2', :platforms => :ruby
 
+gem 'httparty', '~> 0.13.7'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 4.0.5'
