@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421231940) do
+ActiveRecord::Schema.define(version: 20151021210945) do
 
   create_table "accounts", force: :cascade do |t|
     t.string  "name",         limit: 255
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20150421231940) do
     t.integer "three_star",     limit: 4,   default: 0
     t.integer "four_star",      limit: 4,   default: 0
     t.integer "five_star",      limit: 4,   default: 0
+    t.integer "retweet_count",  limit: 4
+    t.integer "favorite_count", limit: 4
   end
 
 end

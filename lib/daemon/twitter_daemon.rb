@@ -9,7 +9,15 @@ def status_to_tweet status
   tweet = Tweet.new
   tweet.id_tweet = status.id
   tweet.text = status.text
-  # TODO id_account, account, favorite_count, retweet_count
+  tweet.retweet_count = status.retweet_count
+  tweet.favorite_count = status.favorite_count
+  account = Account.find(status.user.) # screen_name, name, description, (imagen e id???)
+  if account.nil?
+    account = Account.new
+    account.account_id = status.account_id
+    # TODO: ayuda mati!!
+  end
+  tweet.account_id = status.account_id
   tweet
 end
 
@@ -24,7 +32,7 @@ SUSCRIPTOR = RX::Observer.create(
       puts "Es humor: #{es_humor}"
 
       if es_humor
-        # TODO: save in the database
+        Tweet.save
       end
 
       COLA.pop.subscribe(SUSCRIPTOR)
