@@ -52,7 +52,7 @@ TweetStream.configure do |config|
 end
 
 TERMINOS = [
-    '#LasReGanasDe',
+    '#MaquinaDelTiempoLlevameA',
     Tweet::HASHTAG_IDM,
 ]
 
