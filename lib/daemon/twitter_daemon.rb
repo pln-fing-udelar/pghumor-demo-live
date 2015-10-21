@@ -1,7 +1,9 @@
+require 'rx'
 require 'tweetstream'
 require 'yaml'
 
-require_relative 'bounded_priority_queue'
+require_relative 'clasificador'
+require_relative 'observable_sized_priority_queue'
 
 def status_to_tweet status
   tweet = Tweet.new
@@ -11,7 +13,28 @@ def status_to_tweet status
   tweet
 end
 
-COLA = BoundedPriorityQueue.new 100
+CLASIFICADOR = Clasificador.new
+
+COLA = ObservableSizedPriorityQueue.new 100
+
+SUSCRIPTOR = RX::Observer.create(
+    lambda { |tweet|
+      es_humor = CLASIFICADOR.es_humor?(tweet)
+      puts tweet.text
+      puts "Es humor: #{es_humor}"
+      COLA.pop.subscribe(SUSCRIPTOR)
+    },
+    lambda { |err|
+      puts 'Error: ' + err.to_s
+      COLA.pop.subscribe(SUSCRIPTOR) # Not working
+    },
+    lambda {
+      puts 'Completed'
+      COLA.pop.subscribe(SUSCRIPTOR) # Not working
+    }
+)
+
+COLA.pop.subscribe(SUSCRIPTOR)
 
 APP_CONFIG = Rails.application.secrets
 
@@ -24,7 +47,7 @@ TweetStream.configure do |config|
 end
 
 TERMINOS = [
-    'Dickey',
+    'Arsenal',
     '#IdM2015',
 ]
 

@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/ReactiveX/RxRuby.git
+  revision: e493b321a7a9157a15ff6239f2cbe45cf2d1efec
+  specs:
+    Rx.rb (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -228,6 +234,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  Rx.rb!
   better_errors (~> 2.1.1)
   byebug (~> 4.0.5)
   coffee-rails (~> 4.1.0)
