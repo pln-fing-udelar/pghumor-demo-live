@@ -22,6 +22,11 @@ SUSCRIPTOR = RX::Observer.create(
       es_humor = CLASIFICADOR.es_humor?(tweet)
       puts tweet.text
       puts "Es humor: #{es_humor}"
+
+      if es_humor
+        # TODO: save in the database
+      end
+
       COLA.pop.subscribe(SUSCRIPTOR)
     },
     lambda { |err|
@@ -47,8 +52,8 @@ TweetStream.configure do |config|
 end
 
 TERMINOS = [
-    'Arsenal',
-    '#IdM2015',
+    '#LasReGanasDe',
+    Tweet::HASHTAG_IDM,
 ]
 
 TweetStream::Daemon.new('tracker', log_output: true, log_dir: File.join(Dir.pwd, 'log'), dir: File.join(Dir.pwd, 'tmp/pids')).on_error do |message|

@@ -1,6 +1,8 @@
 class Tweet < ActiveRecord::Base
   include Comparable
 
+  HASHTAG_IDM = '#IdM2015'
+
   belongs_to :account
 
   def self.obtener(count, id_min)
