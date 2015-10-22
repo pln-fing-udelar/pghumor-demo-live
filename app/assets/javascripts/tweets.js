@@ -12,14 +12,11 @@ var Tweets = function(){
 
 
     var setHeader = function(){
-        $('.wellClassified').text('' + Math.round(wellClassified*100/tweetCount) + '%');
-        $('.badClassified').text('' + Math.round(badClassified*100/tweetCount) + '%');
-        $('.totalClassified').text('' + tweetCount);
         if (pause || toolTip){
-            $('#current-title').html('Humor según el clasificador <i class="fa fa-pause"></i>');
+            $('#current-title').html('Humor en vivo según el clasificador <i class="fa fa-pause"></i>');
         }
         else{
-            $('#current-title').html('Humor según el clasificador <i class="fa fa-play"></i>');
+            $('#current-title').html('Humor en vivo según el clasificador <i class="fa fa-play"></i>');
         }
     };
 
@@ -50,18 +47,19 @@ var Tweets = function(){
      *
      * @param hashtag represent a twitter hashtag to search
      */
-    module.getCurrentTrendTweets = function(){
+    module.getCurrentTrendTweets = function() {
         module.getTweets();
     };
 
-    module.getTweets = function(){
+    module.getTweets = function() {
         $.ajax({
             url: '/tweets/' + lastTweetId + "/" + cantidadTweets,
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json',
-            success: function(result){
-                tweetLoop(5, result.tweets);
+            success: function(result) {
+                var cantidad = Math.min(5, result.tweets.length);
+                tweetLoop(cantidad, result.tweets);
             },
             error: function(result){
                 message = '<strong>Upps! Something go wrong!';
@@ -79,19 +77,12 @@ var Tweets = function(){
                 tweetLoop(i, tweets, TIME_WHEN_STOP);
                 return;
             }
-            if (--i){
-                $('#current-title').html('Humor según el clasificador <i class="fa fa-play"></i>');
-                if (tweets[i].id > lastTweetId){
+            if (--i) {
+                $('#current-title').html('Humor en vivo según el clasificador <i class="fa fa-play"></i>');
+                if (tweets[i].id > lastTweetId) {
                     lastTweetId = tweets[i].id;
                 }
                 var $lastChild = $('#tweets-div li').last();
-                if (tweets[i].is_humor){
-                    wellClassified++;
-                }
-                else{
-                    badClassified++;
-                }
-                tweetCount++;
                 $(getHtmlTweet(tweets[i]))
                     .hide()
                     .prependTo('#tweets-div')
@@ -110,21 +101,31 @@ var Tweets = function(){
         }, time)
     };
 
-    var getHtmlTweet = function(tweet){
-        var source   = $("#tweet-template").html();
+    var getHtmlTweet = function(tweet) {
+        var source = $("#tweet-template").html();
         var template = Handlebars.compile(source);
-        var average = (tweet.one_star + 2*tweet.two_star + 3*tweet.three_star + 4*tweet.four_star + 5*tweet.five_star)*1.0/(tweet.positive_votes + tweet.negative_votes);
-        var html = template({
-            image: tweet.account.image_path,
+        var average;
+        if (tweet.positive_votes + tweet.negative_votes == 0) {
+            average = 0;
+        } else {
+            average = (tweet.one_star + 2 * tweet.two_star + 3 * tweet.three_star + 4 * tweet.four_star + 5 * tweet.five_star) * 1.0 / (tweet.positive_votes + tweet.negative_votes);
+        }
+        var image_url;
+        if (tweet.account.image_path.startsWith("https")) {
+            image_url = tweet.account.image_path;
+        } else {
+            image_url = "assets/" + tweet.account.image_path;
+        }
+        return template({
+            image: image_url,
             username: tweet.account.name,
             text: tweet.text,
             eshumor: tweet.is_humor,
-            positive: tweet.positive_votes,
-            negative: tweet.negative_votes,
+            retweets: tweet.retweet_count,
+            favoritos: tweet.favorite_count,
             accountType: tweet.account.account_type,
             averageStar: average
-        });
-        return html
+        })
     };
 
     module.addUsernameClickListener = function(){
@@ -145,10 +146,8 @@ var Tweets = function(){
             content: function(){
                 console.log($(this).data('avg-stars'));
                 content = '<dl>';
-                content += '<dt>Votos positivos</dt><dd>' + $(this).data('positive-votes') + '</dd>';
-                content += '<dt>Votos negativos</dt><dd>' + $(this).data('negative-votes') + '</dd>';
-                content += '<dt>Tipo de cuenta</dt><dd>'  + $(this).data('account-type') + '</dd>';
-                content += '<dt>Prom. estrellas</dt><dd>'  + $(this).data('avg-stars').toLocaleString() + '</dd>';
+                content += '<dt>Retweets</dt><dd>' + $(this).data('retweets') + '</dd>';
+                content += '<dt>Favoritos</dt><dd>' + $(this).data('favoritos') + '</dd>';
                 content += '</dl>';
                 content += '<div class="cleaner"></div>'
                 return content;

@@ -3,6 +3,7 @@ require 'tweetstream'
 require 'yaml'
 
 require_relative 'clasificador'
+require_relative 'cuentas_humor'
 require_relative 'observable_sized_priority_queue'
 
 def status_to_tweet status
@@ -11,13 +12,14 @@ def status_to_tweet status
   tweet.text = status.text
   tweet.retweet_count = status.retweet_count
   tweet.favorite_count = status.favorite_count
-  account = Account.find(status.user.) # screen_name, name, description, (imagen e id???)
+  account = Account.where(name: status.user.screen_name).first
   if account.nil?
     account = Account.new
-    account.account_id = status.account_id
-    # TODO: ayuda mati!!
+    account.name = status.user.screen_name
+    account.description = status.user.description
+    account.image_path = status.user.profile_image_url_https
   end
-  tweet.account_id = status.account_id
+  tweet.account = account
   tweet
 end
 
@@ -32,7 +34,7 @@ SUSCRIPTOR = RX::Observer.create(
       puts "Es humor: #{es_humor}"
 
       if es_humor
-        Tweet.save
+        tweet.save
       end
 
       COLA.pop.subscribe(SUSCRIPTOR)
@@ -59,8 +61,10 @@ TweetStream.configure do |config|
   config.auth_method = :oauth
 end
 
+CUENTAS = obtener_cuentas_humor(APP_CONFIG).map { |user| user.id }
+
 TERMINOS = [
-    '#MaquinaDelTiempoLlevameA',
+    '#chiste',
     Tweet::HASHTAG_IDM,
 ]
 
@@ -76,7 +80,7 @@ end.on_limit do |skip_count|
   puts "[WARNING] Due to limits, #{skip_count} tweets have been skipped"
 end.on_enhance_your_calm do
   puts '[ERROR] Enhance your calm'
-end.track(TERMINOS) do |status|
+end.filter({ :follow => CUENTAS, :track => TERMINOS }) do |status|
   tweet = status_to_tweet(status)
   COLA << tweet
 end

@@ -2,8 +2,9 @@
     <li class="list-group-item">
       <strong>
         <span id="current-title" class="title">
-        Humor según el clasificador <i class="fa fa-play"></i>
+            Humor en vivo según el clasificador <i class="fa fa-play"></i>
         </span>
+        <img src="assets/live.gif" />
       </strong>
     </li>
     <div id="tweets-div">
@@ -11,16 +12,11 @@
           <li class="list-group-item tweet" data-account-type="<%= tweet.account.account_type %>" data-positive-votes="<%= tweet.positive_votes %>" data-negative-votes="<%= tweet.negative_votes %>" data-avg-stars="<%= number_to_human(tweet.star_average) %>" rel="popover" data-placement="left">
             <div class="row">
               <div class="col-sm-1 col-md-1">
-                <img class="img-user" src="assets/<%= tweet.account.image_path%>"/>
+                <img class="img-user" src="<%= tweet.account.image_url  %>"/>
               </div>
               <div class="col-sm-11 col-md-11">
                 <div class="tweet__header">
                   <p class="tweet__item username tweet__item tweet__item--left">@<%= tweet.account.name %></p>
-                  <% if tweet.is_humor %>
-                    <span class="tweet__item tweet__item--left label label-success">Clasificado correctamente</span>
-                  <% else %>
-                    <span class="tweet__item tweet__item--left label label-danger">Clasificado incorrectamente</span>
-                  <% end %>
                 </div>
                 <p class="tweet__text"><%= tweet.text %></p>
               </div>
@@ -29,4 +25,3 @@
       <% end %>
     </div>
 </ul>
-
