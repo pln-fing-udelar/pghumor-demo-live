@@ -1,8 +1,8 @@
-# Prueba de concepto
+# Humor detection with Twitter Streaming
 
-## Configurar usuario de la base
+## Set up the database user
 
-Crear el archivo `config/secrets.yml` con el contenido:
+Create the file `config/secrets.yml` with the content:
 
 ```yml
 development:
@@ -33,27 +33,27 @@ production:
     oauth_token_secret: <%= ENV["TWITTER_STREAMING_OAUTH_TOKEN_SECRET"] %>
 ```
 
-Reemplazar por la contraseña del usuario de la base de datos que use y por las credenciales de la API de Twitter.
+Replace with the password of the user of the used database and with the Twitter API credentials.
 
-Para generar los valores de `secret_key_base` en `development` y `test`, ejecutar:
+To generate the values of `secret_key_base` in `development` and `test`, run:
 
 ```bash
 bundle exec rake secret
 ```
 
-Autorizar usuario `pghumor` a la base:
+Grant access to `pghumor` to the database:
 
 ```sql
 GRANT ALL PRIVILEGES ON prueba_concepto_development.* TO 'pghumor'@'%' WITH GRANT OPTION;
 ```
 
-## Agarrar cambios mientras se deja corriendo el server
+## Catch changes while running the server
 
 ```bash
 bundle exec rerun "bundle exec rails server"
 ```
 
-## Correr el demonio de Twitter Streaming
+## Run the Twitter Streaming daemon
 
 ```bash
 bundle exec rails runner lib/daemon/twitter_daemon.rb start
